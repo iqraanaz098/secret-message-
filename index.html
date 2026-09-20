@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Secret Message 💌</title>
+  <meta name="description" content="A little digital letter with a surprise inside." />
+  <meta name="theme-color" content="#fdeaf1" />
+
+  <!-- Emoji favicon (inline, so the browser never asks for a missing file) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💌%3C/text%3E%3C/svg%3E" />
+
+  <!-- Fonts: Fraunces (soft serif) for the UI, Caveat (handwriting) for the letter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500..700&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ===== Decorative background (screen readers skip it) ===== -->
+  <div class="bg" aria-hidden="true">
+    <span class="blob blob--pink"></span>
+    <span class="blob blob--lavender"></span>
+    <span class="blob blob--cream"></span>
+    <!-- JavaScript adds floating hearts + sparkles in here -->
+    <div class="bg__particles" id="bgParticles"></div>
+  </div>
+
+  <!-- Soft white "flash" used as a screen transition when the letter opens -->
+  <div class="veil" id="veil" aria-hidden="true"></div>
+
+  <!-- Layer where burst particles (hearts, sparkles) are created -->
+  <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
+
+  <main class="stage">
+
+    <!-- ===== 1. Welcome card with the envelope ===== -->
+    <section class="card welcome is-entering" id="welcome" aria-labelledby="welcomeTitle">
+
+      <!-- The envelope is drawn with plain HTML + CSS (no images) -->
+      <div class="scene" id="scene" aria-hidden="true">
+        <div class="envelope" id="envelope">
+          <div class="envelope__back"></div>
+
+          <!-- The letter sits inside and slides up when opened -->
+          <div class="envelope__letter">
+            <span class="letter-hello">for you</span>
+            <span class="letter-line"></span>
+            <span class="letter-line"></span>
+            <span class="letter-line"></span>
+          </div>
+
+          <!-- Front pocket = 3 triangles (left, right, bottom) -->
+          <div class="envelope__front">
+            <span class="pocket pocket--left"></span>
+            <span class="pocket pocket--right"></span>
+            <span class="pocket pocket--bottom"></span>
+          </div>
+
+          <!-- The flap rotates open -->
+          <div class="envelope__flap"></div>
+
+          <!-- Little heart seal -->
+          <div class="envelope__seal">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <h1 id="welcomeTitle">You Have a Secret Message 💌</h1>
+      <p class="lede">Someone left a little surprise for you…</p>
+      <button class="btn btn--primary" id="openBtn" type="button">Open Your Message ✨</button>
+    </section>
+
+    <!-- ===== 2. The secret message card (hidden until opened) ===== -->
+    <article class="card message" id="message" hidden tabindex="-1" aria-labelledby="msgTitle">
+
+      <!-- Tiny postage-stamp decoration -->
+      <div class="message__stamp" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </div>
+
+      <!-- Each .reveal fades in one after another (--i = order) -->
+      <h2 class="letter__greeting reveal" id="msgTitle" style="--i: 0">Hey You! 💗</h2>
+      <p class="letter__text reveal" style="--i: 1">Sometimes the smallest moments become the sweetest memories.</p>
+      <p class="letter__text reveal" style="--i: 2">This little message is just here to remind you to smile today. ✨</p>
+
+      <div class="actions reveal" style="--i: 3">
+        <button class="btn btn--primary" id="loveBtn" type="button">Send a Little Love 💗</button>
+        <button class="btn btn--ghost" id="againBtn" type="button">Read Again 💕</button>
+      </div>
+
+      <!-- Small message shown after "Send a Little Love" -->
+      <p class="love-note" id="loveNote" role="status" aria-live="polite"></p>
+    </article>
+
+  </main>
+
+  <footer class="footer">Made with a little bit of magic ✨</footer>
+
+</body>
+</html>
